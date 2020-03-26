@@ -1,25 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import api from './services/api';
 
+import './global.css';
+import './App.css';
+import './Sidebar.css';
+import './Main.css'
+
+import DevItem from './components/DevItem';
+import DevForm from './components/DevForm';
+
+// O React tem três conceitos básicos:
+// Componente: ele é o mais importante do react, ele é um função/bloco que retorna algum conteudo HTML, CSS ou algum conteudo de JavaScript para questão de interface, o qual não interfere no  resto da aplicação
+// Estado: são informações mantidas pelo componemte (Lembrar: imutabilidade) 
+// Propriedade: informações que um componente PAI passa para o componente FILHO
+
+// Desestruturação: é pegar um objeto ou pegar um vetor e vou dividir ele em variaveis
+
+// aside: é uma tac utilizada para fazer uma sidebar
+// programação imperativa é criar um estado e o meu componente precisa saber se comportar basiado naquele estado
 function App() {
+
+  const [devs, setDevs] = useState([]);
+
+
+  useEffect(() => {
+    async function loadDevs() {
+      const response = await api.get('/devs');
+
+      setDevs(response.data);
+    }
+
+    loadDevs();
+  }, []);
+
+  async function handleAddDev(data) {
+
+    const response = await api.post('/devs', data)
+
+    setDevs([...devs, response.data]);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <div id="app">
+     <aside>
+       <strong>Cadastrar</strong>
+       <DevForm onSubmit={handleAddDev} />
+     </aside>
+
+     <main>
+        <ul>
+          {devs.map(dev => (
+           <DevItem key={dev._id} dev={dev} />
+          ))}
+        </ul>
+     </main>
+   </div>
   );
 }
 
