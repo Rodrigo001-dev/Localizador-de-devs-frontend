@@ -18,3 +18,9 @@ Using JavaScript, Node.js, Express, MongoDB, ReactJS, React-Native among others 
 ##  Demonstration/Demonstração
 
 ![Gif localizador de Devs](https://github.com/Rodrigo001-de/Localizador-de-devs-frontend/blob/master/Localizador-Devs.gif)
+
+## Aviso mobile/ Mobile notice
+
+Infelizmente eu não consegui ainda fazer uma demonstração da versão mobile do App.
+
+Unfortunately I have not yet managed to demonstrate the mobile version of the App.
